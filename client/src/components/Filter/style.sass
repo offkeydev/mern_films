@@ -1,0 +1,113 @@
+.component-filter
+  position: fixed
+  z-index: 15
+  width: 380px
+  left: -380px
+  top: 0
+  height: -webkit-fill-available
+  margin-bottom: 24px
+  margin-top: 124px
+  margin-left: 24px
+  background: #383838
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25)
+  border-radius: 18px
+  transition: all 0.133s ease
+  opacity: 0.15
+  .inn
+    position: relative
+    padding: 16px
+
+  h3
+    font-family: "Roboto",sans-serif
+    font-style: normal
+    font-weight: 900
+    font-size: 24px
+    line-height: 1
+    color: #efefef
+    margin-bottom: 24px
+  .select-list
+    display: flex
+    align-items: center
+    margin-bottom: 24px
+    li
+      margin-right: 22px
+      width: 36px
+      height: 36px
+      background: #282828
+      border-radius: 14px
+      display: flex
+      align-items: center
+      justify-content: center
+      cursor: pointer
+      transition: all 0.133s ease
+      &:hover
+        filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.25))
+        background: #383838
+    li.selected
+      background: #E8B437
+
+  .select-output
+    p
+      font-family: "Roboto", sans-serif
+      font-style: normal
+      font-weight: normal
+      font-size: 16px
+      line-height: 1
+      color: #efefef
+      margin-bottom: 18px
+      span
+        font-size: 18px
+        font-weight: 900
+        margin-left: 16px
+    label
+      display: flex
+      align-items: center
+      position: relative
+      input
+        background: #282828
+        border-radius: 14px
+        border: none
+        outline: none
+        padding: 12px 12px
+        width: 90%
+        font-family: "Roboto", sans-serif
+        font-style: normal
+        font-weight: normal
+        font-size: 16px
+        line-height: 1
+        color: #efefef
+        position: relative
+        z-index: 10
+      button
+        z-index: 5
+        border-radius: 18px
+        border: none
+        background: #282828
+        outline: none
+        width: 42px
+        height: 42px
+        cursor: pointer
+        position: relative
+        right: 42px
+        transition: all 0.133s ease
+    ul
+      li
+        font-family: "Roboto", sans-serif
+        background-color: #282828
+        display: inline-block
+        padding: 12px 12px
+        border-radius: 12px
+        font-size: 14px
+        font-weight: 900
+        margin-right: 8px
+        margin-bottom: 8px
+        color: #383838
+        transition: all 0.133s ease
+        cursor: pointer
+        &:hover
+          color: #7e7e7e
+
+.component-filter.open
+  left: 0
+  opacity: 1
+  transition: all 0.233s ease
