@@ -6,7 +6,7 @@
   z-index: 25
   background-color: #383838
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25)
-  padding: 24px 32px
+  padding: 16px 32px
   .inn
     display: flex
     align-items: center
@@ -40,7 +40,7 @@
 
     ul
       display: flex
-      margin-right: 48px
+      margin-right: 114px
       li
         margin-right: 18px
         a
@@ -64,49 +64,6 @@
           svg path
             fill: #ffffff
 
-    .compare-list
-      display: flex
-      align-items: center
-      text-transform: uppercase
-      font-family: "Roboto", sans-serif
-      font-style: normal
-      font-weight: 900
-      font-size: 14px
-      line-height: 1
-      color: #DBDBDB
-      opacity: 0
-      z-index: -10
-      position: relative
-      transition: all 0.133s ease
-      li
-        border-radius: 18px
-        background: #282828
-        filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))
-        height: 48px
-        display: flex
-        align-items: center
-        justify-content: center
-        min-width: 48px
-        padding: 0 16px
-        margin-right: 8px
-        transition: all 0.133s ease
-        &:hover
-          background-color: #E8B437
-          color: #ffffff
-          cursor: pointer
-      li:first-child:hover
-        background-color: #282828
-        color: #DBDBDB
-
-    .compare-list.open
-      z-index: 5
-      opacity: 1
-    .compare-btn
-      opacity: 0
-      width: 0px
-    .compare-btn.open
-      width: 100px
-      opacity: 1
 
     .user-settings
       .logout,

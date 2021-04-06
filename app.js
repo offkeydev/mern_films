@@ -15,13 +15,14 @@ app.use(function(req, res, next) {
 
 
 app.use('/api/users', require('./routes/api/users'))
+app.use('/api/movie', require('./routes/api/movie'))
 
 
 
 async function start() {
     try {
         //ждём коннекта с БД потом запускаем приложение
-        await mongoose.connect('mongodb+srv://user_a1:2572129offkey@cluster0.6d7al.mongodb.net/test-graphql?retryWrites=true&w=majority', {
+        await mongoose.connect('dbpath', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,

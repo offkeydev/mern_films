@@ -1,5 +1,5 @@
 {
   "port": 22,
-  "jwtSecret": "sachenok",
-  "mongoUri": "mongodb+srv://user_a1:2572129offkey@cluster0.6d7al.mongodb.net/test-graphql?retryWrites=true&w=majority"
+  "jwtSecret": "db",
+  "mongoUri": "db"
 }

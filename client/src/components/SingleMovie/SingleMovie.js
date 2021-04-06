@@ -1,12 +1,15 @@
 import React, {useState} from "react"
 import "./style.sass"
 import {useDispatch, useSelector} from "react-redux";
-import {setMovieCompare, setMovieInfo} from "../../store/reducers/movies";
+import {setMovieCompare, setMovieInfo, setMoviesGenre} from "../../store/reducers/movies";
 import {setModal} from "../../store/reducers/modal";
+import axios from "axios";
+import {NavLink} from "react-router-dom";
 
 export const SingleMovie = ({item, index}) => {
     const filter = useSelector(state => state.filter.filter)
     const movies = useSelector(state => state.movies.movies)
+    const user = useSelector(state => state.user.user)
     const compareMovies = useSelector(state => state.movies.compareMovies)
     const dispatch = useDispatch()
 
@@ -22,9 +25,39 @@ export const SingleMovie = ({item, index}) => {
         else alert('4 is maximum to compare')
     }
 
+    const movieAdd = (id) => {
+        const movie = movies.find(item => item.id === id)
+
+        const data = {
+            userId: user.userId,
+            movie: movie
+        }
+        axios.post('http://localhost:8089/api/movie/add', data)
+            .then(resp => {
+                console.log(resp)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const getToWatch = (id) => {
+        axios.get(`https://videocdn.tv/api/movies?api_token=erYN5XVwHqJVxumOHtq0BNByXDMZBrQL&imdb_id=${id}`)
+            .then(response => {
+                console.log(response)
+                //dispatch(setMoviesGenre(response.data.data))
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <div key={index} className={filter ? "movie-item low" : "movie-item"}>
-            <figure><img src={`https://image.tmdb.org/t/p/original/`+item.poster_path} alt={item.title}/></figure>
+            <NavLink
+                to={{
+                    pathname: `/movie/${item.id}`,
+                    state: { movie: item }
+                }}
+            >
+                <figure><img src={`https://image.tmdb.org/t/p/original/`+item.poster_path} alt={item.title}/></figure>
+            </NavLink>
             <div className="hidden-options">
                 <ul>
                     <li onClick={() => movieInfo(item.id)}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +66,7 @@ export const SingleMovie = ({item, index}) => {
                     <li onClick={() => moviesCompare(item.id)}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15 20H18C18.5304 20 19.0391 19.7893 19.4142 19.4142C19.7893 19.0391 20 18.5304 20 18V15C20 14.7348 20.1054 14.4804 20.2929 14.2929C20.4804 14.1054 20.7348 14 21 14C21.2652 14 21.5196 14.1054 21.7071 14.2929C21.8946 14.4804 22 14.7348 22 15V18C22 19.0609 21.5786 20.0783 20.8284 20.8284C20.0783 21.5786 19.0609 22 18 22H6C4.93913 22 3.92172 21.5786 3.17157 20.8284C2.42143 20.0783 2 19.0609 2 18V15C2 14.7348 2.10536 14.4804 2.29289 14.2929C2.48043 14.1054 2.73478 14 3 14C3.26522 14 3.51957 14.1054 3.70711 14.2929C3.89464 14.4804 4 14.7348 4 15V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H9C9.26522 20 9.51957 20.1054 9.70711 20.2929C9.89464 20.4804 10 20.7348 10 21C10 21.2652 9.89464 21.5196 9.70711 21.7071C9.51957 21.8946 9.26522 22 9 22H15C14.7348 22 14.4804 21.8946 14.2929 21.7071C14.1054 21.5196 14 21.2652 14 21C14 20.7348 14.1054 20.4804 14.2929 20.2929C14.4804 20.1054 14.7348 20 15 20V20ZM4 9C4 9.26522 3.89464 9.51957 3.70711 9.70711C3.51957 9.89464 3.26522 10 3 10C2.73478 10 2.48043 9.89464 2.29289 9.70711C2.10536 9.51957 2 9.26522 2 9V6C2 4.93913 2.42143 3.92172 3.17157 3.17157C3.92172 2.42143 4.93913 2 6 2H9C9.26522 2 9.51957 2.10536 9.70711 2.29289C9.89464 2.48043 10 2.73478 10 3C10 3.26522 9.89464 3.51957 9.70711 3.70711C9.51957 3.89464 9.26522 4 9 4H6C5.46957 4 4.96086 4.21071 4.58579 4.58579C4.21071 4.96086 4 5.46957 4 6V9ZM20 9V6C20 5.46957 19.7893 4.96086 19.4142 4.58579C19.0391 4.21071 18.5304 4 18 4H15C14.7348 4 14.4804 3.89464 14.2929 3.70711C14.1054 3.51957 14 3.26522 14 3C14 2.73478 14.1054 2.48043 14.2929 2.29289C14.4804 2.10536 14.7348 2 15 2H18C19.0609 2 20.0783 2.42143 20.8284 3.17157C21.5786 3.92172 22 4.93913 22 6V9C22 9.26522 21.8946 9.51957 21.7071 9.70711C21.5196 9.89464 21.2652 10 21 10C20.7348 10 20.4804 9.89464 20.2929 9.70711C20.1054 9.51957 20 9.26522 20 9Z" fill="#3E3E3E"/>
                     </svg></li>
-                    <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <li onClick={() => movieAdd(item.id)}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M11.641 12.828H6C5.73478 12.828 5.48043 12.7226 5.29289 12.5351C5.10536 12.3476 5 12.0932 5 11.828C5 11.5628 5.10536 11.3084 5.29289 11.1209C5.48043 10.9334 5.73478 10.828 6 10.828H11.641L10.521 9.708C10.3387 9.51953 10.2377 9.26699 10.2398 9.00479C10.2419 8.74259 10.3469 8.4917 10.5322 8.30616C10.7175 8.12062 10.9682 8.01528 11.2304 8.01281C11.4926 8.01035 11.7453 8.11097 11.934 8.293L14.763 11.12C14.8563 11.2127 14.9304 11.3229 14.981 11.4443C15.0315 11.5657 15.0575 11.696 15.0575 11.8275C15.0575 11.959 15.0315 12.0893 14.981 12.2107C14.9304 12.3321 14.8563 12.4423 14.763 12.535L11.934 15.363C11.7447 15.5408 11.4936 15.6379 11.2339 15.6339C10.9742 15.6299 10.7263 15.525 10.5426 15.3414C10.3589 15.1578 10.2538 14.91 10.2496 14.6503C10.2454 14.3906 10.3423 14.1395 10.52 13.95L11.641 12.828ZM18 3C18.2652 3 18.5196 3.10536 18.7071 3.29289C18.8946 3.48043 19 3.73478 19 4V20C19 20.2652 18.8946 20.5196 18.7071 20.7071C18.5196 20.8946 18.2652 21 18 21C17.7348 21 17.4804 20.8946 17.2929 20.7071C17.1054 20.5196 17 20.2652 17 20V4C17 3.73478 17.1054 3.48043 17.2929 3.29289C17.4804 3.10536 17.7348 3 18 3V3Z" fill="#3E3E3E"/>
                         </svg></li>
                 </ul>

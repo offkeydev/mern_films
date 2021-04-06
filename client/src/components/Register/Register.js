@@ -17,13 +17,23 @@ export const Register = () => {
     }
 
     const registerUser = () => {
-        axios.post(serverReg, user)
+        // axios.post(serverReg, user)
+        //     .then(resp => {
+        //         console.log("register",resp)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
+
+        axios.post('http://localhost:8089/api/users/register', user)
             .then(resp => {
                 console.log("register",resp)
             })
             .catch(err => {
                 console.log(err)
             })
+
+
     }
 
     return(

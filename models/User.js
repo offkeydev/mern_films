@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {Schema, model} = require('mongoose')
+const {Schema, model, Types} = require('mongoose')
 
 const UserSchema = new Schema({
     name: {
@@ -18,10 +18,7 @@ const UserSchema = new Schema({
         type: Number,
         required: false,
     },
-    movies: {
-        type: Array,
-        required: true,
-    }
+    movies: {type: Array}
 
 })
 
